@@ -23,18 +23,19 @@ class Game{
         this.updateEverything();
         
         
-        this.player.draw();
-        this.timer++
+        //this.timer++
         
         window.requestAnimationFrame(timestamp => this.animation(timestamp));
     }
-
+    
     drawEverything(){
         
     }
-
+    
     updateEverything(){
         this.clearCanvas();
+        this.player.update();
+        this.player.draw();
     }
 
     clearCanvas() {

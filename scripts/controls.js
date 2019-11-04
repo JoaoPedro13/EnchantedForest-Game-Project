@@ -13,38 +13,84 @@ class Controls {
             // React based on the key pressed
             switch (event.keyCode) {
                 case 37:
+                    // left
                     game.player.moveLeft();
-                
+                    
                     break;
                 case 39:
+                    //right
                     game.player.moveRight();
 
                     break;
                 case 40:
                     game.player.moveDown();
-                  
-                  break;
+                    //down
+                    break;
                 case 38:
                     game.player.moveUp();
-                  
-                  break;
+                    //up
+                    break;
                 case 65:
                     game.player.moveLeft();
-                    
+                    // A
                     break;
                 case 87:
                     game.player.moveUp();
-                    
+                    // W
                     break;
                 case 68:
                     game.player.moveRight();
-                    
+                    // D
                     break;
                 case 83:
                     game.player.moveDown();
-                    
+                    // S
                     break;
             }
         });
+
+        window.addEventListener('keyup', event => {
+            switch (event.keyCode) {
+                //LEFT
+                case 37:
+                    this.game.player.velocityX = 0
+                    console.log("MoveLEFT, Player-position: " + this.game.player.positionX + ", " + this.game.player.positionY)
+                    break;
+                //RIGHT
+                case 39:
+                    this.game.player.velocityX = 0
+                    console.log("MoveRIGHT, Player-position: " + this.game.player.positionX + ", " + this.game.player.positionY)
+                    break;
+                //UP
+                case 38:
+                    this.game.player.velocityY = 0
+                    console.log("MoveUP, Player-position: " + this.game.player.positionX + ", " + this.game.player.positionY)
+                    break;
+                //DOWN
+                case 40:
+                    this.game.player.velocityY = 0
+                    console.log("MoveDOWN, Player-position: " + this.game.player.positionX + ", " + this.game.player.positionY)
+                    break;
+                case 87:
+                    this.game.player.velocityX = 0
+                    console.log("MoveLEFT, Player-position: " + this.game.player.positionX + ", " + this.game.player.positionY)
+                    break;
+                //RIGHT
+                case 68:
+                    this.game.player.velocityX = 0
+                    console.log("MoveUP, Player-position: " + this.game.player.positionX + ", " + this.game.player.positionY)
+                    break;
+                //UP
+                case 65:
+                    this.game.player.velocityY = 0
+                    console.log("MoveUP, Player-position: " + this.game.player.positionX + ", " + this.game.player.positionY)
+                    break;
+                //DOWN
+                case 83:
+                    this.game.player.velocityY = 0
+                    console.log("MoveDOWN, Player-position: " + this.game.player.positionX + ", " + this.game.player.positionY)
+                    break;
+            }
+        })
     }
 }
