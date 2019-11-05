@@ -105,9 +105,9 @@ class Controls {
 
         });
                 window.addEventListener('click', e => {
-                    this.game.player.bullets.push([this.x, this.y])
-                    this.game.player.shoot();
-    
+                    this.game.bullets.push(new Bullet(this.game, this.x, this.y))
+                    
+                    console.log(this.game.bullets.pop())
                     console.log("click in X: " + this.x + " Y: " + this.y )
                     //console.log(this.bullets)
                 })

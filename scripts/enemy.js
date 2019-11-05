@@ -5,7 +5,7 @@ class Enemy {
         this.y = -50;
         this.height = 20;
         this.width = 20;
-        this.colided = false;
+        
         this.rndmDir = Math.floor((Math.random() * 4) + 1);
         //this.rndmX = Math.floor((Math.random() * game.width) + 1);
         //this.rndmY = Math.floor((Math.random() * game.height) + 1);

@@ -16,7 +16,8 @@ class Player {
         this.anchorY = 0.5;
         this.bulletSpeed =5;
         this.bullets = [];
-        this.bulletPos
+        this.bulletPositionX = this.positionX;
+        this.bulletPositionY = this.positionY
        // this.bulletDirectionX = this.game.controls.x - this.positionX;
        // this.bulletDirectionY = this.game.controls.y - this.positionY;
 
@@ -27,9 +28,7 @@ class Player {
             //this.positionY -= 10
             this.velocityY = -5
             this.direction = 'N'
-        } else if (this.positionY <= 0) {
-            this.velocityY *= 0
-            this.positionY = -1
+      
         }
     }
 
@@ -72,25 +71,5 @@ class Player {
         this.positionY += this.velocityY;
     }
 
-    shoot() {
-        this.context.fillStyle = 'yellowgreen';
-        this.context.fillRect(this.positionX, this.positionY, this.fireWidth, this.fireHeight);
-        //console.log('test')
-        //this.context.fillRect(this.positionX, this.positionX, 200,200);
-        
-        //Normalize
-        let length = Math.sqrt(this.bulletDirectionX* this.bulletDirectionX + this.bulletDirectionY * this.bulletDirectionY);
-        this.bulletDirectionX /= length;
-        this.bulletDirectionY /= length;
-
-    }
-
-
-/* 
-    for (let i = 0; i < bullets.length; i++) {
-        bullet[i][0] += bulletDirectionX * bulletSpeed;
-        bullet[i][1] += bulletDirectionY * bulletSpeed;
-        /////hit detection goes here
-    }
-} */
+    
 }

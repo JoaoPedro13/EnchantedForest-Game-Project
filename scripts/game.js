@@ -12,6 +12,7 @@ class Game{
         this.enemyTimer = 0;
         this.coolDown = 2000;
         this.enemiesCollision = false;
+        this.bullets = [];
 
         //this.background = new Background(this);
     }
@@ -41,12 +42,12 @@ class Game{
         this.clearCanvas();
         if (this.enemyTimer < timestamp - this.coolDown && this.enemies.length -1 < 3000 ) {
             this.enemies.push(new Enemy(this))
-            console.log("Number of enemies: " + this.enemies.length)
+            //console.log("Number of enemies: " + this.enemies.length)
             this.enemyTimer = timestamp
         }
         
 
-        for (let i = 0; i < this.enemies.length; i++) {
+       /*  for (let i = 0; i < this.enemies.length; i++) {
             this.enemies[i].randomSpawn(1);
         }
                 
@@ -68,23 +69,26 @@ class Game{
                 //console.log(this.player.health)
             }
             
-        }
+        } */
 
+        
         if(this.player.health <= 0){
-            console.log("You Died")
+            //console.log("You Died")
         }
         
         //console.log("mouse X: " + this.controls.x + "Y: " + this.controls.y)
         
         this.player.draw();
         this.player.update();
-    
-        for (let i = 0; i < this.player.bullets.length; i++) {
-            this.player.bullets[0] += bullets.directionxx * bulletSpeed;
-            this.player.bullets[1] += bullets.directionyy * bulletSpeed;
-            /////hit detection goes here
-        }
-    
+        //console.log(this.bullets.length)
+        
+            for (let i = 1; i < this.bullets.length; i++) {
+                this.bullets[i].x += this.bullets[i].directionX * this.bullets[i].speed;
+                this.bullets[i].y += this.bullets[i].directionY * this.bullets[i].speed;
+                
+                /////hit detection goes here
+            }
+           
     }
     
 
