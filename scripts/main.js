@@ -4,14 +4,14 @@ const context = $canvas.getContext('2d');
 const game = new Game($canvas);
 
 window.onload = function () {
-    game.gameStart();
+    //game.gameStart();
 
 
-/*     document.getElementById("start-button").onclick = function () {
+    document.getElementById("start-button").onclick = function () {
         //console.log("before: "+ game.running);
 
         if (!game.running) {
-            game.startGame();
+            game.gameStart();
         }
 
 
@@ -19,6 +19,6 @@ window.onload = function () {
 
         //console.log("after: "+ game.running);
 
-    }; */
+    };
 
 };

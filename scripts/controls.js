@@ -2,6 +2,10 @@ class Controls {
     constructor(game) {
         this.game = game;
         this.context = game.context;
+        this.x;
+        this.y;
+        
+
     }
 
 
@@ -27,7 +31,6 @@ class Controls {
                     //down
                     break;
                 case 38:
-                    console.log('aaa')
                     game.player.moveUp();
                     //up
                     break;
@@ -93,5 +96,24 @@ class Controls {
                     break;
             }
         })
+
+        window.addEventListener('mousemove', e => {
+            let bounds = e.target.getBoundingClientRect();
+            this.x = e.pageX - bounds.left - scrollX; // scroll is to fix the offset
+            this.y = e.pageY - bounds.top - scrollY;
+            
+
+        });
+                window.addEventListener('click', e => {
+                    this.game.player.bullets.push([this.x, this.y])
+                    this.game.player.shoot();
+    
+                    console.log("click in X: " + this.x + " Y: " + this.y )
+                    //console.log(this.bullets)
+                })
+
+        
     }
+
+    
 }
