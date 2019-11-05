@@ -1,5 +1,6 @@
 class Enemy {
     constructor(game) {
+        
         this.x = -50;
         this.y = -50;
         this.height = 20;
@@ -10,7 +11,12 @@ class Enemy {
         this.rndmY = Math.floor((Math.random() * game.height) + 1);
         this.playerX = game.player.positionX
         this.playerY = game.player.positionY
-
+        this.velocityX = 1;
+        this.velocityY = 1;
+        this.speed = 0;
+        this.distance = 0;
+        this.angle = 0;
+        
     }
 
     randomSpawn(){
@@ -18,19 +24,23 @@ class Enemy {
         let direction = ""
         switch (this.rndmDir) {
             case 1:
+                this.x = this.rndmX;
                 direction = "top";
-                this.draw(this.rndmX, this.y)
+                this.draw(this.x, this.y)
                 break;
             case 2:
+                this.y = this.rndmY;
                 direction = "right"
-                this.draw(this.x, this.rndmY)
+                this.draw(this.x, this.y)
                 break;
             case 3:
+                this.x = this.rndmX;
                 direction = "bott"
-                this.draw(this.rndmX, this.y)
+                this.draw(this.x, this.y)
                 break;
             case 4:
-                this.draw(this.x, this.rndmY)
+                this.y = this.rndmY;
+                this.draw(this.x, this.y)
                 direction = "left";
                 break;
         }            
@@ -44,9 +54,46 @@ class Enemy {
         context.fillRect(x, y, this.width , this.height );
         context.restore();
     }
-    update() {
+    updateX() {
         if (this.x > this.playerX){
-            this.x++
+            this.velocityX = -1;
+            this.x += this.velocityX;
+            
+        }else if (this.x < this.playerX){
+            this.velocityX = 1;
+            this.x += this.velocityX;
         }
+    }    
+    updateY(){
+    
+        if (this.y > this.playerY){
+            this.velocityY = -1;
+            this.y += this.velocityY;
+        }else if (this.y < this.playerY){
+            this.velocityY = 1;
+            this.y += this.velocityY;
+        }        
+            
+    }
+
+    updateAngle() {
+        this.dx = game.player.positionX - this.x;
+        this.dy = game.player.positionY - this.y;
+        this.distance = Math.sqrt((this.dx * this.dx) + (this.dy * this.dy));
+        //this.angle = Math.atan2(this.dy, this.dx) * 180 / Math.PI;
+        //console.log("dx: "+ this.dx)
+        //console.log("dy: "+ this.dy)
+        //console.log("distance: "+ this.distance)
+        //console.log("angle: "+ this.angle)
+    }
+    updateSpeed() {
+        this.velocityX = this.speed * (this.dx / this.distance);
+        this.velocityY = this.speed * (this.dy / this.distance);
+    }
+    move() {
+        /* this.UpdateAngle();
+        this.UpdateSpeed(); */
+        this.x += this.velocityX;
+        this.y += this.velocityY;
     }
 }

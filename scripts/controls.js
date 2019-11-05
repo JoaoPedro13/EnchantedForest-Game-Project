@@ -15,7 +15,7 @@ class Controls {
                 case 37:
                     // left
                     game.player.moveLeft();
-                    
+
                     break;
                 case 39:
                     //right
@@ -27,6 +27,7 @@ class Controls {
                     //down
                     break;
                 case 38:
+                    console.log('aaa')
                     game.player.moveUp();
                     //up
                     break;
