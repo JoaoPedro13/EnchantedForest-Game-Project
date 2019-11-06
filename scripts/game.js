@@ -7,13 +7,14 @@ class Game{
         this.running = false;
         this.player = new Player(this);
         this.controls = new Controls(this);
+        this.timer = 0;
         this.controls.setControls();
         this.enemies = []; 
         this.enemyTimer = 0;
-        this.coolDown = 2000;
+        this.coolDown = 1200;
         this.enemiesCollision = false;
         this.bullets = [];
-        this.stamp;
+        
 
         //this.background = new Background(this);
     }
@@ -33,9 +34,9 @@ class Game{
 
         
         
-        //this.timer++
-        
-        this.stamp = window.requestAnimationFrame(timestamp => this.animation(timestamp));
+        this.timer++
+        console.log(this.timer)
+        window.requestAnimationFrame(timestamp => this.animation(timestamp));
     }
     
     drawEverything(){
@@ -44,18 +45,24 @@ class Game{
     
     updateEverything(timestamp){
         this.clearCanvas();
+
+        //ENEMIES CREATION
         if (this.enemyTimer < timestamp - this.coolDown && this.enemies.length -1 < 3000 ) {
-            this.enemies.push(new Enemy(this))
+            this.enemies.push(new Enemy(this, -50, Math.floor((Math.random() * game.height) + 1), 1,"darkred", 1))
+
+            if(this.timer >= 600){
+                this.enemies.push(new Enemy(this, this.width + 50, Math.floor((Math.random() * game.height) + 1), 2, "green", 2))
+            }
             //console.log("Number of enemies: " + this.enemies.length)
             this.enemyTimer = timestamp
         }
         
 
+        
+        //ENEMIES SPAWN
         for (let i = 0; i < this.enemies.length; i++) {
-            this.enemies[i].randomSpawn(1);
-        }
-                
-        for (let i = 0; i < this.enemies.length; i++) {
+            this.enemies[i].spawn();
+            //this.enemies[i].randomSpawn(2);
             this.enemyHitBox();
             if(this.playerHitBox(this.player.positionX, this.player.positionY, this.enemies[i].x, this.enemies[i].y, this.player.width, this.player.height, this.enemies[i].width, this.enemies[i].height)){
                 this.enemies[i].collided = true;
@@ -86,36 +93,45 @@ class Game{
         this.player.update();
         //console.log(this.bullets.length)
         
-            for (let i = 1; i < this.bullets.length; i++) {
-                this.bullets[i].draw();
+        for (let i = 0; i < this.bullets.length; i++) {
+            this.bullets[i].draw();
+            this.bullets[i].x += this.bullets[i].directionX * this.bullets[i].speed;
+            this.bullets[i].y += this.bullets[i].directionY * this.bullets[i].speed;
 
-                this.bullets[i].x += this.bullets[i].directionX * this.bullets[i].speed;
-                this.bullets[i].y += this.bullets[i].directionY * this.bullets[i].speed;
+           
+            /////hit detection goes here
+            for( let j = 0; j < this.enemies.length; j++){
                 
-                console.log(this.bullets.length)
-                if (this.bullets[i].x > this.width || this.bullets[i].x < 0 || this.bullets[i].y > this.height || this.bullets[i].y < 0){
-                    this.bullets.splice(i,1)
-                    console.log(this.bullets.length)
-                }
+                /* console.log("X "+ this.enemies[j].x)
+                console.log("Y " + this.enemies[j].y)
+                console.log("W "+ this.enemies[j].width)
+                console.log("H "+ this.enemies[j].height) */
                 
-                /////hit detection goes here
-                for( let j = 0; j < this.enemies.length; j++){
-                   if(this.bullets[i].hit( this.enemies[j].x, this.enemies[j].y, this.enemies[j].width, this.enemies[j].height )){
-                       this.enemies[j].health--;
-                       this.player.score += 2
-                       this.bullets.splice(i, 1);
-                       if(this.enemies[j].health<=0){
-                           this.enemies.splice(j,1);
-                        }
+                
+                if(this.bullets.length && this.bullets[i].hit( this.enemies[j].x, this.enemies[j].y, this.enemies[j].width, this.enemies[j].height )){
+                    this.enemies[j].health--;
+                    this.player.score += 2
+                    this.bullets.splice(i, 1);
 
-                        
-
-                   }
-
+                    }
+                if (this.enemies.length && this.enemies[j].health <= 0) {
+                    this.enemies.splice(j, 1);
                 }
 
-
+                //check collisions
             }
+            if (this.bullets.length && this.bullets[i].x > this.width ||
+                this.bullets.length && this.bullets[i].x < 0 ||
+                this.bullets.length && this.bullets[i].y > this.height ||
+                this.bullets.length && this.bullets[i].y < 0) {
+                this.bullets.splice(i, 1)
+                //    console.log(this.bullets.length)
+
+            
+            }
+
+
+        }
            
     }
     
@@ -124,28 +140,17 @@ class Game{
         this.context.clearRect(0, 0, this.width, this.height);
     }
 
-    /* playerHitBox(x1, y1, x2, y2){
-    
-            let bottom1, bottom2, left1, left2, right1, right2, top1, top2;
-            left1 = x1 - 20;
-            right1 = x1 + 20;
-            top1 = y1 - 20;
-            bottom1 = y1 + 20;
-            left2 = x2 - 20;
-            right2 = x2 + 20;
-            top2 = y2 - 20;
-            bottom2 = y2 + 20;
-            return !(left1 > right2 || left2 > right1 || top1 > bottom2 || top2 > bottom1); */
+   
     playerHitBox(x1, y1, x2, y2, width1, height1, width2, height2) {
 
         let bottom1, bottom2, left1, left2, right1, right2, top1, top2;
         left1 = x1;
         right1 = x1 + width1;
-        top1 = y1 - height1;
+        top1 = y1;
         bottom1 = y1 + height1;
         left2 = x2;
         right2 = x2 + width2;
-        top2 = y2 - height2;
+        top2 = y2;
         bottom2 = y2 + height2;
         return !(left1 > right2 || left2 > right1 || top1 > bottom2 || top2 > bottom1);   
     }
@@ -168,19 +173,17 @@ class Game{
         this.context.font = "170px palatino";
         this.context.fillStyle = 'darkred';
         this.context.fillText("YOU DIED", 95, 350)
+        this.context.fillStyle = 'darkgrey';
+        this.context.fillText("SCORE", 15, 349)
+
     }
 
     reset(){
 
     }
 
-    pause(animation){
+  pause(){
 
-        cancelAnimationFrame(animation)
-        this.context.font = "100px palatino";
-        this.context.fillStyle = 'black';
-        this.context.fillText("PAUSE", 200, 500)
-    }
-
+  }
 }
 

@@ -58,70 +58,62 @@ class Controls {
                 //LEFT
                 case 37:
                     this.game.player.velocityX = 0
-                    console.log("MoveLEFT, Player-position: " + this.game.player.positionX + ", " + this.game.player.positionY)
+                    //console.log("MoveLEFT, Player-position: " + this.game.player.positionX + ", " + this.game.player.positionY)
                     break;
                 //RIGHT
                 case 39:
                     this.game.player.velocityX = 0
-                    console.log("MoveRIGHT, Player-position: " + this.game.player.positionX + ", " + this.game.player.positionY)
+                    //console.log("MoveRIGHT, Player-position: " + this.game.player.positionX + ", " + this.game.player.positionY)
                     break;
                 //UP
                 case 38:
                     this.game.player.velocityY = 0
-                    console.log("MoveUP, Player-position: " + this.game.player.positionX + ", " + this.game.player.positionY)
+                    //console.log("MoveUP, Player-position: " + this.game.player.positionX + ", " + this.game.player.positionY)
                     break;
                 //DOWN
                 case 40:
                     this.game.player.velocityY = 0
-                    console.log("MoveDOWN, Player-position: " + this.game.player.positionX + ", " + this.game.player.positionY)
+                    //console.log("MoveDOWN, Player-position: " + this.game.player.positionX + ", " + this.game.player.positionY)
                     break;
                 case 87:
                     this.game.player.velocityY = 0
-                    console.log("MoveLEFT, Player-position: " + this.game.player.positionX + ", " + this.game.player.positionY)
+                    //console.log("MoveLEFT, Player-position: " + this.game.player.positionX + ", " + this.game.player.positionY)
                     break;
                 //RIGHT
                 case 68:
                     this.game.player.velocityX = 0
-                    console.log("MoveUP, Player-position: " + this.game.player.positionX + ", " + this.game.player.positionY)
+                    //console.log("MoveUP, Player-position: " + this.game.player.positionX + ", " + this.game.player.positionY)
                     break;
                 //UP
                 case 65:
                     this.game.player.velocityX = 0
-                    console.log("MoveUP, Player-position: " + this.game.player.positionX + ", " + this.game.player.positionY)
+                    //console.log("MoveUP, Player-position: " + this.game.player.positionX + ", " + this.game.player.positionY)
                     break;
                 //DOWN
                 case 83:
                     this.game.player.velocityY = 0
-                    console.log("MoveDOWN, Player-position: " + this.game.player.positionX + ", " + this.game.player.positionY)
+                    //console.log("MoveDOWN, Player-position: " + this.game.player.positionX + ", " + this.game.player.positionY)
                     break;
             }
         })
 
         window.addEventListener('mousemove', e => {
             let bounds = e.target.getBoundingClientRect();
-            let mouseX = e.pageX - bounds.left - scrollX; // scroll is to fix the offset
-            let mouseY = e.pageY - bounds.top - scrollY;
             
-            if(mouseX > 0 && mouseX < this.game.width){
-                this.x = mouseX 
-
-            }
+            this.x = e.pageX - bounds.left - scrollX; // scroll is to fix the offset
             
-            if (mouseY > 0 && mouseY < this.game.height) {
-                this.y = mouseY
-
-            } 
+            this.y = e.pageY - bounds.top - scrollY;
             
 
         });
-                $canvas.addEventListener('click', e => {
+                window.addEventListener('click', e => {
                     if(!game.running){
                         
                     }
                     this.game.bullets.push(new Bullet(this.game, this.x, this.y))
                     
                     
-                    console.log("click in X: " + this.x + " Y: " + this.y )
+                    //console.log("click in X: " + this.x + " Y: " + this.y )
                     //console.log(this.bullets)
                 })
 

@@ -7,7 +7,7 @@ class Player {
         this.height = 20;
         this.width = 20;
         this.health = 300;
-        this.score = 0
+        this.score = 0;
         this.count = 0; 
         this.direction = 'S';
         this.velocityX = 0;

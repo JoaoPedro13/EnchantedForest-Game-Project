@@ -17,10 +17,10 @@ window.onload = function () {
             game.running=true;
             game.gameStart();
         }else{
-            game.pause();
+            /* game.pause(game.stamp);
             running = false;
             game.running=false;
-
+ */
         }
 
 

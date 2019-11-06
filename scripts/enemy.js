@@ -1,8 +1,8 @@
 class Enemy {
-    constructor(game) {
+    constructor(game, startX, startY, life, color, velocity) {
         this.game = game
-        this.x = -50;
-        this.y = -50;
+        this.x = startX;
+        this.y = startY;
         this.height = 20;
         this.width = 20;        
         this.rndmDir = Math.floor((Math.random() * 4) + 1);
@@ -12,46 +12,109 @@ class Enemy {
         this.playerY = game.player.positionY
         this.velocityX = 1;
         this.velocityY = 1;
-        this.speed = 0.5;
+        this.speed = velocity;
         this.distance = 0;
         this.angle = 0;
-        this.health = 1;
+        this.health = life;
+        this.healthBar = life;
         this.collided = false;
+        this.colour = color
+        
         
 
     }
 
-    randomSpawn(n) {
+    spawn(){
+        this.draw(this.x, this.y, this.colour)
+    }
+
+    /* randomSpawn(n) {
 
 
         let direction = ""
         switch (n) {
             case 1:
-                //this.x = this.rndmX;
+                //this.y = -50
+                //this.x = Math.floor((Math.random() * game.width) + 1);
                 direction = "top";
                 this.draw(this.x, this.y, "darkred")
                 break;
             case 2:
-                //this.y = this.rndmY;
+                this.x = 0;
+                this.y = Math.floor((Math.random() * game.height) + 1);
                 direction = "right"
                 this.draw(this.x, this.y, "green")
                 break;
             case 3:
-                //this.x = this.rndmX;
+                //this.y = -50
+                //this.x = Math.floor((Math.random() * game.width) + 1);
                 direction = "bott"
                 this.draw(this.x, this.y, "blue")
                 break;
             case 4:
-                //this.y = this.rndmY;
+                //this.x = -50;
+                //this.y = Math.floor((Math.random() * game.height) + 1);
                 this.draw(this.x, this.y, "orange")
                 direction = "left";
                 break;
         }
 
-    }
+    } */
 
 
     draw(x, y, color) {
+        switch (this.healthBar) {
+            case 1:
+                if (this.health === 1) {
+                    context.save();
+                    context.fillStyle = "black"
+                    context.fillRect(x-2, y - 5, 24, 2)
+                    context.fillStyle = "red"
+                    context.fillRect(x-2, y - 5, 24, 2)
+                    context.restore();
+                } else {
+                    context.fillStyle = "black"
+                    context.fillRect(x-2, y - 5, 24, 2)
+                    context.fillStyle = "black"
+                    context.fillRect(x-2, y - 5, 24, 2)
+                }
+                
+            break;
+            case 2:
+                if (this.health === 2){
+                    context.fillStyle = "black"
+                    context.fillRect(x-2, y - 5, 24, 2)
+                    context.fillStyle = "red"
+                    context.fillRect(x-2, y - 5, 24, 2)    
+                }else{
+                    context.fillStyle = "black"
+                    context.fillRect(x-2, y - 5, 24, 2)
+                    context.fillStyle = "red"
+                    context.fillRect(x-2, y - 5, 12, 2)
+                }
+                
+            break;
+            case 3:
+                if (this.health === 3) {
+                    context.fillStyle = "black"
+                    context.fillRect(x-2, y - 5, 24, 2)
+                    context.fillStyle = "red"
+                    context.fillRect(x-2, y - 5, 24, 2)
+                } else if (this.health === 2) {
+                    context.fillStyle = "black"
+                    context.fillRect(x-2, y - 5, 24, 2)
+                    context.fillStyle = "red"
+                    context.fillRect(x-2, y - 5, 16, 2)
+                }else{
+                    context.fillStyle = "black"
+                    context.fillRect(x-2, y - 5, 24, 2)
+                    context.fillStyle = "red"
+                    context.fillRect(x-2, y - 5, 8, 2)
+                }
+                
+            break;
+            
+        }
         context.save();
         context.fillStyle = color;
         context.fillRect(x, y, this.width, this.height);
