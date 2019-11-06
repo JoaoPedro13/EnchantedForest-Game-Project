@@ -56,4 +56,36 @@ class Bullet {
         return !(left1 > right2 || left2 > right1 || top1 > bottom2 || top2 > bottom1);
 
     }
+
+    destroy(i){
+        for( let j = 0; j < this.game.enemies.length; j++)
+        if (this.hit(this.game.enemies[j].x, this.game.enemies[j].y, this.game.enemies[j].width, this.game.enemies[j].height)) {
+            this.game.enemies[j].health--;
+            this.game.player.score += 2
+
+            this.bullets.splice(i, 1);
+            if (this.game.enemies[j].health <= 0) {
+                this.game.enemies.splice(j, 1);
+            }
+        }
+
+
+
+        for( let i = 0; i< this.game.bullets.length; i++)
+    
+        if(this.x > this.game.width ||
+            this.x < 0 ||
+            this.y > this.game.height ||
+            this.y < 0) {
+            this.game.bullets.splice(i, 1)
+        }
+    }
+
+    update(){
+            this.draw();
+            this.x += this.directionX * this.speed;
+            this.y += this.directionY * this.speed;
+        }
+    
+
 }
