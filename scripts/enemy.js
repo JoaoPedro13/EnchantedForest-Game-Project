@@ -4,8 +4,7 @@ class Enemy {
         this.x = -50;
         this.y = -50;
         this.height = 20;
-        this.width = 20;
-        
+        this.width = 20;        
         this.rndmDir = Math.floor((Math.random() * 4) + 1);
         //this.rndmX = Math.floor((Math.random() * game.width) + 1);
         //this.rndmY = Math.floor((Math.random() * game.height) + 1);
@@ -13,11 +12,12 @@ class Enemy {
         this.playerY = game.player.positionY
         this.velocityX = 1;
         this.velocityY = 1;
-        this.speed = 2;
+        this.speed = 0.5;
         this.distance = 0;
         this.angle = 0;
         this.health = 1;
         this.collided = false;
+        
 
     }
 
@@ -70,7 +70,7 @@ class Enemy {
     update() {
         if (this.x === this.game.player.positionX && this.y === this.game.player.positionY) {
             collided = true;
-            //console.log(collided)
+            console.log(collided)
         } else {
             this.updateAngle()
             this.updateSpeed()

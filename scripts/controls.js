@@ -76,7 +76,7 @@ class Controls {
                     console.log("MoveDOWN, Player-position: " + this.game.player.positionX + ", " + this.game.player.positionY)
                     break;
                 case 87:
-                    this.game.player.velocityX = 0
+                    this.game.player.velocityY = 0
                     console.log("MoveLEFT, Player-position: " + this.game.player.positionX + ", " + this.game.player.positionY)
                     break;
                 //RIGHT
@@ -86,7 +86,7 @@ class Controls {
                     break;
                 //UP
                 case 65:
-                    this.game.player.velocityY = 0
+                    this.game.player.velocityX = 0
                     console.log("MoveUP, Player-position: " + this.game.player.positionX + ", " + this.game.player.positionY)
                     break;
                 //DOWN
@@ -99,15 +99,28 @@ class Controls {
 
         window.addEventListener('mousemove', e => {
             let bounds = e.target.getBoundingClientRect();
-            this.x = e.pageX - bounds.left - scrollX; // scroll is to fix the offset
-            this.y = e.pageY - bounds.top - scrollY;
+            let mouseX = e.pageX - bounds.left - scrollX; // scroll is to fix the offset
+            let mouseY = e.pageY - bounds.top - scrollY;
+            
+            if(mouseX > 0 && mouseX < this.game.width){
+                this.x = mouseX 
+
+            }
+            
+            if (mouseY > 0 && mouseY < this.game.height) {
+                this.y = mouseY
+
+            } 
             
 
         });
-                window.addEventListener('click', e => {
+                $canvas.addEventListener('click', e => {
+                    if(!game.running){
+                        
+                    }
                     this.game.bullets.push(new Bullet(this.game, this.x, this.y))
                     
-                    console.log(this.game.bullets.pop())
+                    
                     console.log("click in X: " + this.x + " Y: " + this.y )
                     //console.log(this.bullets)
                 })

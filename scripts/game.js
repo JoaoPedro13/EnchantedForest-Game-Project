@@ -13,6 +13,7 @@ class Game{
         this.coolDown = 2000;
         this.enemiesCollision = false;
         this.bullets = [];
+        this.stamp;
 
         //this.background = new Background(this);
     }
@@ -24,14 +25,17 @@ class Game{
 
     animation(timestamp){
 
+        if(this.player.health <= 0){
+            this.gameOverScreen();
+        }else{
+            this.updateEverything(timestamp);
+        }
 
-
-        this.updateEverything(timestamp);
         
         
         //this.timer++
         
-        window.requestAnimationFrame(timestamp => this.animation(timestamp));
+        this.stamp = window.requestAnimationFrame(timestamp => this.animation(timestamp));
     }
     
     drawEverything(){
@@ -47,29 +51,29 @@ class Game{
         }
         
 
-       /*  for (let i = 0; i < this.enemies.length; i++) {
+        for (let i = 0; i < this.enemies.length; i++) {
             this.enemies[i].randomSpawn(1);
         }
                 
         for (let i = 0; i < this.enemies.length; i++) {
             this.enemyHitBox();
-            if(this.playerHitBox(this.player.positionX, this.player.positionY, this.enemies[i].x, this.enemies[i].y)){
+            if(this.playerHitBox(this.player.positionX, this.player.positionY, this.enemies[i].x, this.enemies[i].y, this.player.width, this.player.height, this.enemies[i].width, this.enemies[i].height)){
                 this.enemies[i].collided = true;
             }else{
                 this.enemies[i].collided = false;
             }
-            //console.log(this.enemies[0].collided)
+            //console.log(this.enemies[i].collided)
             this.enemies[i].update();
-
+            
             //this.enemies[i].updateAngle();
             //this.enemies[i].updateSpeed();
             //this.enemies[i].move();
-            if(this.enemies[i].collided = true){
+            if(this.enemies[i].collided === true){
                 this.player.health--
                 //console.log(this.player.health)
             }
             
-        } */
+        }
 
         
         if(this.player.health <= 0){
@@ -83,10 +87,34 @@ class Game{
         //console.log(this.bullets.length)
         
             for (let i = 1; i < this.bullets.length; i++) {
+                this.bullets[i].draw();
+
                 this.bullets[i].x += this.bullets[i].directionX * this.bullets[i].speed;
                 this.bullets[i].y += this.bullets[i].directionY * this.bullets[i].speed;
                 
+                console.log(this.bullets.length)
+                if (this.bullets[i].x > this.width || this.bullets[i].x < 0 || this.bullets[i].y > this.height || this.bullets[i].y < 0){
+                    this.bullets.splice(i,1)
+                    console.log(this.bullets.length)
+                }
+                
                 /////hit detection goes here
+                for( let j = 0; j < this.enemies.length; j++){
+                   if(this.bullets[i].hit( this.enemies[j].x, this.enemies[j].y, this.enemies[j].width, this.enemies[j].height )){
+                       this.enemies[j].health--;
+                       this.player.score += 2
+                       this.bullets.splice(i, 1);
+                       if(this.enemies[j].health<=0){
+                           this.enemies.splice(j,1);
+                        }
+
+                        
+
+                   }
+
+                }
+
+
             }
            
     }
@@ -96,7 +124,7 @@ class Game{
         this.context.clearRect(0, 0, this.width, this.height);
     }
 
-    playerHitBox(x1, y1, x2, y2){
+    /* playerHitBox(x1, y1, x2, y2){
     
             let bottom1, bottom2, left1, left2, right1, right2, top1, top2;
             left1 = x1 - 20;
@@ -107,8 +135,19 @@ class Game{
             right2 = x2 + 20;
             top2 = y2 - 20;
             bottom2 = y2 + 20;
-            return !(left1 > right2 || left2 > right1 || top1 > bottom2 || top2 > bottom1);
-        
+            return !(left1 > right2 || left2 > right1 || top1 > bottom2 || top2 > bottom1); */
+    playerHitBox(x1, y1, x2, y2, width1, height1, width2, height2) {
+
+        let bottom1, bottom2, left1, left2, right1, right2, top1, top2;
+        left1 = x1;
+        right1 = x1 + width1;
+        top1 = y1 - height1;
+        bottom1 = y1 + height1;
+        left2 = x2;
+        right2 = x2 + width2;
+        top2 = y2 - height2;
+        bottom2 = y2 + height2;
+        return !(left1 > right2 || left2 > right1 || top1 > bottom2 || top2 > bottom1);   
     }
 
 
@@ -120,6 +159,27 @@ class Game{
                 //console.log(this.enemies[i].y === this.enemies[i - 1].y)
             }
         }
+    }
+
+    gameOverScreen(){
+        this.running = false
+        this.context.fillStyle = 'black';
+        this.context.fillRect(0, 0, this.width, this.height);
+        this.context.font = "170px palatino";
+        this.context.fillStyle = 'darkred';
+        this.context.fillText("YOU DIED", 95, 350)
+    }
+
+    reset(){
+
+    }
+
+    pause(animation){
+
+        cancelAnimationFrame(animation)
+        this.context.font = "100px palatino";
+        this.context.fillStyle = 'black';
+        this.context.fillText("PAUSE", 200, 500)
     }
 
 }

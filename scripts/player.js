@@ -6,54 +6,38 @@ class Player {
         this.positionY = game.height -200;
         this.height = 20;
         this.width = 20;
-        this.health = 3000;
+        this.health = 300;
+        this.score = 0
+        this.count = 0; 
         this.direction = 'S';
         this.velocityX = 0;
         this.velocityY = 0;
-        this.fireHeight = 5;
-        this.fireWidth = 5;
         this.anchorX = 0.5;
         this.anchorY = 0.5;
-        this.bulletSpeed =5;
-        this.bullets = [];
-        this.bulletPositionX = this.positionX;
-        this.bulletPositionY = this.positionY
-       // this.bulletDirectionX = this.game.controls.x - this.positionX;
-       // this.bulletDirectionY = this.game.controls.y - this.positionY;
-
-    }
-
-    moveUp() {
-        if (this.positionY > 0) {
-            //this.positionY -= 10
-            this.velocityY = -5
-            this.direction = 'N'
+        
       
-        }
+
     }
 
-    moveDown() {
-
-        if (this.positionY < game.height - this.height) {
-            this.velocityY = 5
-            this.direction = 'S'
-        }
+    moveUp() {       
+            //this.positionY -= 10
+        this.velocityY = -5
+        this.direction = 'N'        
     }
 
-    moveLeft() {
-        if (this.positionX > 0) {
-            this.velocityX = -5
-            this.direction = 'W'
-        }
+    moveDown() {        
+        this.velocityY = 5
+        this.direction = 'S'        
     }
 
-    moveRight() {
+    moveLeft() {        
+        this.velocityX = -5
+        this.direction = 'W'        
+    }
 
-
-        if (this.positionX < game.width - this.width) {
-            this.velocityX = 5
-            this.direction = 'E'
-        }
+    moveRight() {        
+        this.velocityX = 5
+        this.direction = 'E'        
     }
 
     
@@ -67,8 +51,14 @@ class Player {
     }
     
     update() {
-        this.positionX += this.velocityX;
-        this.positionY += this.velocityY;
+        if (this.positionX + this.velocityX > 0 && this.positionX + this.velocityX + this.width < this.game.width){
+            this.positionX += this.velocityX;
+            
+        }
+        
+        if (this.positionY + this.velocityY > 0 && this.positionY + this.velocityY + this.height < this.game.height){
+            this.positionY += this.velocityY;
+        }
     }
 
     
