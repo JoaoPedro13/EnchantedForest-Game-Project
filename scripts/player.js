@@ -42,7 +42,7 @@ class Player {
 
     
     draw() {
-        //if()
+        
         this.context.fillStyle = 'black'
         this.context.fillRect(24,16,300,20)
         this.context.fillStyle = '#10ff00'

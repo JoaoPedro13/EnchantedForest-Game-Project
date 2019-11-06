@@ -134,9 +134,38 @@ class Game {
     for (let i = 0; i < this.enemies.length; i++) {
       this.enemies[i].spawn();
       //this.enemies[i].randomSpawn(2);
-      this.enemyHitBox();
+        
+        for(let j = 1; j < this.enemies.length; j++){
+            if (
+                this.hitBox(
+                    this.enemies[i].x, 
+                    this.enemies[i].y, 
+                    this.enemies[j].x,
+                    this.enemies[j].y,
+                    this.enemies[i].width, 
+                    this.enemies[i].height,
+                    this.enemies[j].width,
+                    this.enemies[j].height)
+                ){ /* this.enemies[i].x+;
+                    this.enemies[i].y++;
+                    this.enemies[j].x--;
+                    this.enemies[j].y-- */
+                    //this.enemies[i].updateAngle()
+                    //this.enemies[i].updateSpeed()
+                    this.enemies[i].move()
+                    
+
+                    //this.enemies[j].updateAngle()
+                    //this.enemies[j].updateSpeed()
+                    this.enemies[j].move()
+
+
+            }
+
+        }
+      
       if (
-        this.playerHitBox(
+        this.hitBox(
           this.player.positionX,
           this.player.positionY,
           this.enemies[i].x,
@@ -219,7 +248,7 @@ class Game {
     this.context.clearRect(0, 0, this.width, this.height);
   }
 
-  playerHitBox(x1, y1, x2, y2, width1, height1, width2, height2) {
+  hitBox(x1, y1, x2, y2, width1, height1, width2, height2) {
     let bottom1, bottom2, left1, left2, right1, right2, top1, top2;
     left1 = x1;
     right1 = x1 + width1;
@@ -235,16 +264,6 @@ class Game {
       top1 > bottom2 ||
       top2 > bottom1
     );
-  }
-
-  enemyHitBox() {
-    for (let i = 1; i < this.enemies.length; i++) {
-      if (this.enemies[i].y === this.enemies[i - 1].y) {
-        this.enemies[i].y++;
-        this.enemies[i - 1].y--;
-        //console.log(this.enemies[i].y === this.enemies[i - 1].y)
-      }
-    }
   }
 
   gameOverScreen() {
