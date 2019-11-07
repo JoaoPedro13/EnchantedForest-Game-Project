@@ -1,6 +1,7 @@
 class Enemy {
-    constructor(game, startX, startY, life, color, velocity) {
+    constructor(game, startX, startY, life, color, velocity, sprite) {
         this.game = game
+        this.context = game.context
         this.x = startX;
         this.y = startY;
         this.height = 20;
@@ -12,20 +13,52 @@ class Enemy {
         this.playerY = game.player.positionY
         this.velocityX = 1;
         this.velocityY = 1;
-        this.speed = velocity;
+        this.speed = velocity*0.1;
         this.distance = 0;
         this.angle = 0;
         this.health = life;
         this.healthBar = life;
         this.collided = false;
-        this.colour = color
+        this.colour = color;
+        this.timer = 0;
+        this.coolDown = 10
+        this.count = 0;
+        this.enemy11 = new Image();
+        this.enemy11.src = './scripts/images/enemies/NormalMushroom_Walk_1.png';
+        this.enemy12 = new Image();
+        this.enemy12.src = './scripts/images/enemies/NormalMushroom_Walk_2.png';
+        this.enemy13 = new Image();
+        this.enemy13.src = './scripts/images/enemies/NormalMushroom_Walk_3.png';
+        this.enemy14 = new Image();
+        this.enemy14.src = './scripts/images/enemies/NormalMushroom_Walk_4.png';
+        this.changeImages = 200
         
         
 
     }
 
-    spawn(){
-        this.draw(this.x, this.y, this.colour)
+
+    spawn(timestamp){
+        //this.draw(this.x, this.y, this.colour)
+        if (this.timer < timestamp - this.changeImages) {
+            if(this.count >= 3){
+                this.count = 0
+                this.context.drawImage(this.enemy14, this.x, this.y, this.width, this.height); 
+                this.count++
+            }else if(this.count ===0){
+                this.context.drawImage(this.enemy11, this.x, this.y, this.width, this.height);
+                this.count++
+
+            }else if(this.count === 1){
+                this.context.drawImage(this.enemy12, this.x, this.y, this.width, this.height);
+                this.count++
+
+            }else if(this.count === 2)
+                this.context.drawImage(this.enemy13, this.x, this.y, this.width, this.height);
+                this.count++
+               
+            }
+               
     }
 
     /* randomSpawn(n) {
@@ -68,51 +101,83 @@ class Enemy {
                 if (this.health === 1) {
                     context.save();
                     context.fillStyle = "black"
-                    context.fillRect(x-2, y - 5, 24, 2)
-                    context.fillStyle = "red"
-                    context.fillRect(x-2, y - 5, 24, 2)
+                    context.fillRect(x-2, y - 5, 24, 3)
+                    context.fillStyle = "green"
+                    context.fillRect(x-2, y - 5, 24, 3)
                     context.restore();
                 } else {
                     context.fillStyle = "black"
-                    context.fillRect(x-2, y - 5, 24, 2)
+                    context.fillRect(x-2, y - 5, 24, 3)
                     context.fillStyle = "black"
-                    context.fillRect(x-2, y - 5, 24, 2)
+                    context.fillRect(x-2, y - 5, 24, 3)
                 }
                 
             break;
             case 2:
                 if (this.health === 2){
                     context.fillStyle = "black"
-                    context.fillRect(x-2, y - 5, 24, 2)
-                    context.fillStyle = "red"
-                    context.fillRect(x-2, y - 5, 24, 2)    
+                    context.fillRect(x-2, y - 5, 24, 3)
+                    context.fillStyle = "green"
+                    context.fillRect(x-2, y - 5, 24, 3)    
                 }else{
                     context.fillStyle = "black"
-                    context.fillRect(x-2, y - 5, 24, 2)
+                    context.fillRect(x-2, y - 5, 24, 3)
                     context.fillStyle = "red"
-                    context.fillRect(x-2, y - 5, 12, 2)
+                    context.fillRect(x-2, y - 5, 12, 3)
                 }
                 
             break;
             case 3:
                 if (this.health === 3) {
                     context.fillStyle = "black"
-                    context.fillRect(x-2, y - 5, 24, 2)
-                    context.fillStyle = "red"
-                    context.fillRect(x-2, y - 5, 24, 2)
+                    context.fillRect(x-2, y - 5, 24, 3)
+                    context.fillStyle = "green"
+                    context.fillRect(x-2, y - 5, 24, 3)
                 } else if (this.health === 2) {
                     context.fillStyle = "black"
-                    context.fillRect(x-2, y - 5, 24, 2)
-                    context.fillStyle = "red"
-                    context.fillRect(x-2, y - 5, 16, 2)
+                    context.fillRect(x-2, y - 5, 24, 3)
+                    context.fillStyle = "orange"
+                    context.fillRect(x-2, y - 5, 16, 3)
                 }else{
                     context.fillStyle = "black"
-                    context.fillRect(x-2, y - 5, 24, 2)
+                    context.fillRect(x-2, y - 5, 24, 3)
                     context.fillStyle = "red"
-                    context.fillRect(x-2, y - 5, 8, 2)
+                    context.fillRect(x-2, y - 5, 8, 3)
                 }
                 
             break;
+            case 6:
+                    if (this.health === 6) {
+                        context.fillStyle = "black"
+                        context.fillRect(x-5, y - 5, 24, 4)
+                        context.fillStyle = "green"
+                        context.fillRect(x-5, y - 5, 24, 4)
+                    } else if (this.health === 5) {
+                        context.fillStyle = "black"
+                        context.fillRect(x-5, y - 5, 24, 4)
+                        context.fillStyle = "green"
+                        context.fillRect(x-5, y - 5, 20, 4)
+                    } else if (this.health === 4) {
+                        context.fillStyle = "black"
+                        context.fillRect(x-5, y - 5, 24, 4)
+                        context.fillStyle = "orange"
+                        context.fillRect(x-5, y - 5, 16, 4)
+                    } else if (this.health === 3) {
+                        context.fillStyle = "black"
+                        context.fillRect(x-5, y - 5, 24, 4)
+                        context.fillStyle = "orange"
+                        context.fillRect(x-5, y - 5, 12, 4)
+                    } else if (this.health === 2) {
+                        context.fillStyle = "black"
+                        context.fillRect(x-5, y - 5, 24, 4)
+                        context.fillStyle = "red"
+                        context.fillRect(x-5, y - 5, 8, 4)
+                    }else{
+                        context.fillStyle = "black"
+                        context.fillRect(x-2, y - 5, 24, 3)
+                        context.fillStyle = "red"
+                        context.fillRect(x-2, y - 5, 4, 3)
+                    } 
             
         }
         context.save();

@@ -15,7 +15,7 @@ window.onload = function () {
         if (!running) {
             running = true;
             game.running=true;
-            game.gameStart();
+            game.startGame();
         }else{
             /* game.pause(game.stamp);
             running = false;

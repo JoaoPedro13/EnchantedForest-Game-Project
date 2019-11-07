@@ -62,10 +62,12 @@ class Bullet {
         if (this.hit(this.game.enemies[j].x, this.game.enemies[j].y, this.game.enemies[j].width, this.game.enemies[j].height)) {
             this.game.enemies[j].health--;
             this.game.player.score += 2
+            this.game.bullets.splice(i, 1)
 
             this.bullets.splice(i, 1);
             if (this.game.enemies[j].health <= 0) {
                 this.game.enemies.splice(j, 1);
+                
             }
         }
 

@@ -11,14 +11,18 @@ class Game {
     this.controls.setControls();
     this.enemies = [];
     this.enemyTimer = 0;
-    this.coolDown = 20;
+    this.enemyTimer2 = 0;
+    this.enemyTimer3 = 0;
+    this.enemyTimer4 = 0;
+    this.enemyTimer5 = 0;
+    this.enemyTimer6 = 0;
+    this.coolDown = 20000;
     this.enemiesCollision = false;
     this.bullets = [];
-
-    //this.background = new Background(this);
+    this.background = new Background(this);
   }
 
-  gameStart() {
+  startGame() {
     this.animation();
   }
 
@@ -29,141 +33,175 @@ class Game {
       this.updateEverything(timestamp);
     }
 
-    this.timer++;
-    //console.log(this.timer)
+    //this.timer++;
+    console.log(this.timer)
     window.requestAnimationFrame(timestamp => this.animation(timestamp));
   }
 
-  drawEverything() {}
+  drawEverything() { }
 
   updateEverything(timestamp) {
     this.clearCanvas();
+    this.background.draw();
+    for (let i = 0; i < this.enemies.length; i++) {
+      this.enemies[i].spawn(timestamp);}
+
+    //console.log("enemy timer " + this.enemyTimer);
+    //console.log("timestamp" + timestamp)
 
     //ENEMIES CREATION
     if (
       this.enemyTimer < timestamp - this.coolDown &&
       this.enemies.length - 1 < 100
     ) {
+      console.log("darkred 1 enemies")
       this.enemies.push(
         new Enemy(
           this,
-          -50,
+          0,
           Math.floor(Math.random() * game.height + 1),
-          1,
+          6,
           "darkred",
-          1
+          (1)
         )
       );
 
-      if (this.timer >= 600) {
-        this.enemies.push(
-          new Enemy(
-            this,
-            this.width + 50,
-            Math.floor(Math.random() * game.height + 1),
-            1,
-            "blue",
-            2
-          )
-        );
-      }
 
-      if (this.timer >= 1200) {
-        this.enemies.push(
-          new Enemy(
-            this,
-            this.width + 50,
-            Math.floor(Math.random() * game.height + 1),
-            2,
-            "green",
-            2
-          )
-        );
-      }
-
-      if (this.timer >= 2400) {
-        this.enemies.push(
-          new Enemy(
-            this,
-            this.width + 50,
-            Math.floor(Math.random() * game.height + 1),
-            3,
-            "red",
-            2
-          )
-        );
-      }
-
-      if (this.timer >= 9600) {
-        this.enemies.push(
-          new Enemy(
-            this,
-            this.width + 50,
-            Math.floor(Math.random() * game.height + 1),
-            1,
-            "blue",
-            2
-          )
-        );
-        this.enemies.push(
-          new Enemy(
-            this,
-            this.width + 50,
-            Math.floor(Math.random() * game.height + 1),
-            3,
-            "red",
-            2
-          )
-        );
-        this.enemies.push(
-          new Enemy(
-            this,
-            this.width + 50,
-            Math.floor(Math.random() * game.height + 1),
-            3,
-            "darkred",
-            2
-          )
-        );
-      }
-      // console.log("Number of enemies: " + this.enemies.length)
+      //console.log("Number of enemies: " + this.enemies.length)
       this.enemyTimer = timestamp;
     }
 
+    console.log("check if true-> ", this.enemyTimer < timestamp - 7000)
+    
+    if (
+      this.enemyTimer2 < timestamp - 3000 &&
+      this.enemies.length - 1 < 100
+    ) {
+      //console.log("orange enemies")
+      this.enemies.push(
+        new Enemy(
+          this,
+          this.width + 25,
+          Math.floor(Math.random() * game.height + 1),
+          6,
+          "orange",
+          2
+        )
+      );
+
+      this.enemyTimer2 = timestamp;
+    }
+
+
+    if (this.enemyTimer3 < timestamp - 3000 &&
+      this.enemies.length - 1 < 1000) {
+      //console.log("darkred 2 enemies")
+      this.enemies.push(
+        new Enemy(
+          this,
+          this.width + 25,
+          Math.floor(Math.random() * game.height + 1),
+          1,
+          "red",
+          2
+        )
+      );
+      this.enemyTimer3 = timestamp;
+    }
+
+    if (this.enemyTimer4 < timestamp - 3500 &&
+      this.enemies.length - 1 < 800) {
+      this.enemies.push(
+        new Enemy(
+          this,
+          this.width + 25,
+          Math.floor(Math.random() * game.height + 1),
+          2,
+          "green",
+          2
+        )
+      );
+      this.enemyTimer4 = timestamp;
+    }
+
+    if (this.enemyTimer5 < timestamp - 4000 &&
+      this.enemies.length - 1 < 500) {
+      this.enemies.push(
+        new Enemy(
+          this,
+          this.width + 25,
+          Math.floor(Math.random() * game.height + 1),
+          2,
+          "brown",
+          3
+        )
+      );
+      this.enemyTimer5 = timestamp;
+    }
+
+    if (this.enemyTimer6 < timestamp - 5000 &&
+      this.enemies.length - 1 < 1000) {
+      this.enemies.push(
+        new Enemy(
+          this,
+          this.width + 25,
+          Math.floor(Math.random() * game.height + 1),
+          1,
+          "red",
+          2
+        )
+      );
+      this.enemies.push(
+        new Enemy(
+          this,
+          Math.floor(Math.random() * game.width + 1),
+          this.height+ 25,
+          3,
+          "blue",
+          2
+        )
+      );
+      this.enemies.push(
+        new Enemy(
+          this,
+          -25,
+          Math.floor(Math.random() * game.height + 1),
+          2,
+          "pink",
+          3
+        )
+      );
+      this.enemyTimer6 = timestamp;
+    }
     //ENEMIES SPAWN
     for (let i = 0; i < this.enemies.length; i++) {
-      this.enemies[i].spawn();
+      //this.enemies[i].spawn(timestamp);
       //this.enemies[i].randomSpawn(2);
-        
-        for(let j = 1; j < this.enemies.length; j++){
-            if (
-                this.hitBox(
-                    this.enemies[i].x, 
-                    this.enemies[i].y, 
-                    this.enemies[j].x,
-                    this.enemies[j].y,
-                    this.enemies[i].width, 
-                    this.enemies[i].height,
-                    this.enemies[j].width,
-                    this.enemies[j].height)
-                ){ /* this.enemies[i].x+;
-                    this.enemies[i].y++;
-                    this.enemies[j].x--;
-                    this.enemies[j].y-- */
-                    //this.enemies[i].updateAngle()
-                    //this.enemies[i].updateSpeed()
-                    this.enemies[i].move()
-                    
 
-                    //this.enemies[j].updateAngle()
-                    //this.enemies[j].updateSpeed()
-                    this.enemies[j].move()
+      //HitBox enemy-on-enemy
+      for (let j = 1; j < this.enemies.length; j++) {
+        if (
+          this.hitBox(
+            this.enemies[i].x,
+            this.enemies[i].y,
+            this.enemies[j].x,
+            this.enemies[j].y,
+            this.enemies[i].width,
+            this.enemies[i].height,
+            this.enemies[j].width,
+            this.enemies[j].height)
+        ) {
+          this.enemies[i].move()
 
 
-            }
+
+          this.enemies[j].move()
+
 
         }
-      
+
+      }
+
       if (
         this.hitBox(
           this.player.positionX,
@@ -176,9 +214,15 @@ class Game {
           this.enemies[i].height
         )
       ) {
+
         this.enemies[i].collided = true;
+        this.player.velocityX *= 0.8
+        this.player.velocityY *= 0.8
+
       } else {
         this.enemies[i].collided = false;
+        this.player.velocityX
+        this.player.velocityY
       }
       //console.log(this.enemies[i].collided)
       this.enemies[i].update();
@@ -198,8 +242,7 @@ class Game {
 
     //console.log("mouse X: " + this.controls.x + "Y: " + this.controls.y)
 
-    this.player.draw();
-    this.player.update();
+
     //console.log(this.bullets.length)
 
     if (!this.bullets.length) {
@@ -212,37 +255,44 @@ class Game {
 
         this.bullets[i].update();
         this.bullets[i].destroy(i);
-        /////hit detection goes here
-        for (let j = 0; j < this.enemies.length; j++) {
-          /* console.log("X "+ this.enemies[j].x)
-                    console.log("Y " + this.enemies[j].y)
-                    console.log("W "+ this.enemies[j].width)
-                    console.log("H "+ this.enemies[j].height) */
-          /*  if (this.bullets.length && this.bullets[i].hit(this.enemies[j].x, this.enemies[j].y, this.enemies[j].width, this.enemies[j].height)) {
-                        this.enemies[j].health--;
-                        this.player.score += 2
 
-                        this.bullets.splice(i, 1);
-                        if (this.enemies[j].health <= 0) {
-                            this.enemies.splice(j, 1);
-                        }
-                    }
-        
-
-
-
-                }
-                if (this.bullets.length && this.bullets[i].x > this.width ||
-                    this.bullets.length && this.bullets[i].x < 0 ||
-                    this.bullets.length && this.bullets[i].y > this.height ||
-                    this.bullets.length && this.bullets[i].y < 0) {
-                    this.bullets.length && this.bullets.splice(i, 1)
-                    //    console.log(this.bullets.length)
-          */
-        }
+        if (this.bullets[i])
+          /////hit detection goes here
+          for (let j = 0; j < this.enemies.length; j++) {
+            /* console.log("X "+ this.enemies[j].x)
+                      console.log("Y " + this.enemies[j].y)
+                      console.log("W "+ this.enemies[j].width)
+                      console.log("H "+ this.enemies[j].height) */
+            /*  if (this.bullets.length && this.bullets[i].hit(this.enemies[j].x, this.enemies[j].y, this.enemies[j].width, this.enemies[j].height)) {
+                          this.enemies[j].health--;
+                          this.player.score += 2
+  
+                          this.bullets.splice(i, 1);
+                          if (this.enemies[j].health <= 0) {
+                              this.enemies.splice(j, 1);
+                          }
+                      }
+          
+  
+  
+  
+                  }
+                  if (this.bullets.length && this.bullets[i].x > this.width ||
+                      this.bullets.length && this.bullets[i].x < 0 ||
+                      this.bullets.length && this.bullets[i].y > this.height ||
+                      this.bullets.length && this.bullets[i].y < 0) {
+                      this.bullets.length && this.bullets.splice(i, 1)
+                      //    console.log(this.bullets.length)
+            */
+          }
       }
     }
+    this.background.drawBorderTop()
+    this.player.draw();
+    this.player.update();
+    this.background.drawBordersBLR()
   }
+
 
   clearCanvas() {
     this.context.clearRect(0, 0, this.width, this.height);
@@ -275,7 +325,7 @@ class Game {
     this.context.fillText("YOU DIED", 95, 350);
     this.context.fillStyle = "darkgrey";
     this.context.font = "40px palatino";
-    this.context.fillText("SCORE     " + this.player.score, 300, 450);
+    this.context.fillText(`*     SCORE     *     ${this.player.score}     *`, 270, 450);
     this.context.strokeStyle = "white";
     this.context.lineWidth = 3;
     this.context.beginPath();
@@ -285,7 +335,7 @@ class Game {
     this.context.closePath();
   }
 
-  reset() {}
+  reset() { }
 
-  pause() {}
+  pause() { }
 }

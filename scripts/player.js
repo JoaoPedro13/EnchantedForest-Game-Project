@@ -6,7 +6,7 @@ class Player {
         this.positionY = game.height -200;
         this.height = 20;
         this.width = 20;
-        this.health = 300000;
+        this.health = 3000;
         this.score = 0;
         this.count = 0; 
         this.direction = 'S';
@@ -44,16 +44,16 @@ class Player {
     draw() {
         
         this.context.fillStyle = 'black'
-        this.context.fillRect(24,16,300,20)
+        this.context.fillRect(22,14,300,20)
         this.context.fillStyle = '#10ff00'
-        this.context.fillRect(24,16,this.health/10,20)
+        this.context.fillRect(22,14,this.health/10,20)
 
 
-        this.context.fillStyle = 'black';
+        this.context.fillStyle = 'white ';
         this.context.fillRect(this.positionX, this.positionY, this.width, this.height);
 
 
-        this.context.beginPath();
+        /* this.context.beginPath();
         this.context.rect(250, 350, 200, 100);
         this.context.fillStyle = '#FFFFFF';
         this.context.fillStyle = 'rgba(225,225,225,0.5)';
@@ -65,7 +65,7 @@ class Player {
         this.context.closePath();
         this.context.font = '40pt Kremlin Pro Web';
         this.context.fillStyle = '#000000';
-        this.context.fillText('Start', 345, 415);
+        this.context.fillText('Start', 345, 415); */
         
         
         //DRAW AN IMAGE
