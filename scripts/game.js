@@ -132,7 +132,7 @@ class Game {
     } */
 
     if (
-      this.enemyTimer4 < timestamp - 10000 &&
+      this.enemyTimer1 < timestamp -this.coolDown ||
       this.enemies.length < 30 &&
       this.enemies.length > 15
     ) {
@@ -169,7 +169,7 @@ class Game {
     }
  */
     if (
-      this.enemyTimer6 < timestamp - 30000 &&
+      this.enemyTimer1 < timestamp - this.coolDown ||
       this.enemies.length < 60 &&
       this.enemies.length > 40
     ) {

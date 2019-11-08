@@ -13,7 +13,7 @@ class Enemy {
     this.playerY = game.player.positionY;
     this.velocityX = 1;
     this.velocityY = 1;
-    this.speed = velocity * 0.3;
+    this.speed = velocity * 0.4;
     this.distance = 0;
     this.angle = 0;
     this.health = life;
