@@ -54,9 +54,15 @@ class Controls {
           // S
           event.preventDefault();
           break;
+        case 80:
+          game.pause();
+          // P
+          event.preventDefault();
+          break;
       }
     });
 
+    
     window.addEventListener("keyup", event => {
       switch (event.keyCode) {
         //LEFT
@@ -108,7 +114,7 @@ class Controls {
           break;
       }
     });
-    /*
+    
     window.addEventListener("mousemove", e => {
       let bounds = e.target.getBoundingClientRect();
 
@@ -116,14 +122,14 @@ class Controls {
 
       this.y = e.pageY - bounds.top - scrollY;
     });
-    */
+   
 
     this.game.canvas.addEventListener("click", e => {
-      const x = e.offsetX;
-      const y = e.offsetY;
-      this.game.bullets.push(new Bullet(this.game, x, y));
+      // e.offsetX;
+      // e.offsetY;
+      this.game.bullets.push(new Bullet(this.game, this.x, this.y));
 
-      //console.log("click in X: " + this.x + " Y: " + this.y )
+      //console.log("click in X: " + x + " Y: " + y )
       //console.log(this.bullets)
     });
   }

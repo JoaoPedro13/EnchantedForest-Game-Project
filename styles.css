@@ -1,3 +1,43 @@
-canvas{
-    border: 2px solid black;
+canvas {
+    background-image: url("./images/start.png");
+  margin-top: 0.5em;
+  margin-right: 6em;
+  margin-left: 6em;
+  border: 2px solid black;
+}
+
+body {
+  background-image: url("./images/Border.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin-bottom: 9em;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+sidebar {
+
+  margin-right: 5em;
+  display: flex;
+  
+  justify-content: space-around;
+}
+
+button {
+  background-color: rgba(6, 46, 5, 0.8);
+  border: none;
+  padding: 1em;
+  color: white;
+  font: 1em sans-serif;
+  margin: 1em;
+}
+
+#pause-button {
+  padding: 1em 2em;
+}
+#controls-button {
+  padding: 1em 1.5em;
 }

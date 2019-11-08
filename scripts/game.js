@@ -16,14 +16,30 @@ class Game {
     this.enemyTimer4 = 0;
     this.enemyTimer5 = 0;
     this.enemyTimer6 = 0;
-    this.coolDown = 20000;
+    this.coolDown = 1000;
     this.enemiesCollision = false;
     this.bullets = [];
     this.background = new Background(this);
+    this.stamp;
+    this.controlsScreen = new Image();
+    this.controlsScreen.scr = "./images/Controls.png";
+    this.startImage = new Image();
+    this.startImage.src = "./images/start.png"
+    
   }
 
   startGame() {
-    this.animation();
+    if (!this.running) {
+      this.running = true;
+      this.reset();
+      this.animation();
+    } else {
+      game.running = false;
+      window.cancelAnimationFrame(this.stamp);
+      this.running = true;
+      this.reset();
+      this.animation();
+    }
   }
 
   animation(timestamp) {
@@ -33,18 +49,22 @@ class Game {
       this.updateEverything(timestamp);
     }
 
-    //this.timer++;
-    console.log(this.timer)
-    window.requestAnimationFrame(timestamp => this.animation(timestamp));
+    this.timer++;
+    console.log(this.timer);
+    this.stamp = window.requestAnimationFrame(timestamp =>
+      this.animation(timestamp)
+    );
   }
 
-  drawEverything() { }
+  drawEverything() {}
 
   updateEverything(timestamp) {
     this.clearCanvas();
     this.background.draw();
     for (let i = 0; i < this.enemies.length; i++) {
-      this.enemies[i].spawn(timestamp);}
+      this.enemies[i].spawn(timestamp);
+      this.enemies[i].draw();
+    }
 
     //console.log("enemy timer " + this.enemyTimer);
     //console.log("timestamp" + timestamp)
@@ -52,30 +72,29 @@ class Game {
     //ENEMIES CREATION
     if (
       this.enemyTimer < timestamp - this.coolDown &&
-      this.enemies.length - 1 < 100
+      this.enemies.length < 100
     ) {
-      console.log("darkred 1 enemies")
       this.enemies.push(
         new Enemy(
           this,
+          Math.floor(Math.random() * game.width + 1),
           0,
-          Math.floor(Math.random() * game.height + 1),
           6,
-          "darkred",
-          (1)
+          1,
+          1,
+          30,
+          30
         )
       );
 
-
-      //console.log("Number of enemies: " + this.enemies.length)
       this.enemyTimer = timestamp;
     }
 
-    console.log("check if true-> ", this.enemyTimer < timestamp - 7000)
-    
-    if (
+    // console.log("check if true-> ", this.enemyTimer < timestamp - 7000)
+
+    /* if (
       this.enemyTimer2 < timestamp - 3000 &&
-      this.enemies.length - 1 < 100
+      this.enemies.length < 10 && this.enemies.length  > 5
     ) {
       //console.log("orange enemies")
       this.enemies.push(
@@ -84,17 +103,18 @@ class Game {
           this.width + 25,
           Math.floor(Math.random() * game.height + 1),
           6,
-          "orange",
-          2
+          (0.9),
+          2,
+          30,
+          30
         )
       );
 
       this.enemyTimer2 = timestamp;
-    }
+    } */
 
-
-    if (this.enemyTimer3 < timestamp - 3000 &&
-      this.enemies.length - 1 < 1000) {
+    /*  if (this.enemyTimer3 < timestamp - 3000 &&
+      this.enemies.length < 20  && this.enemies.length  > 10) {
       //console.log("darkred 2 enemies")
       this.enemies.push(
         new Enemy(
@@ -102,73 +122,91 @@ class Game {
           this.width + 25,
           Math.floor(Math.random() * game.height + 1),
           1,
-          "red",
-          2
+          2,
+          3,
+          30,
+          30
         )
       );
       this.enemyTimer3 = timestamp;
-    }
+    } */
 
-    if (this.enemyTimer4 < timestamp - 3500 &&
-      this.enemies.length - 1 < 800) {
+    if (
+      this.enemyTimer4 < timestamp - 10000 &&
+      this.enemies.length < 30 &&
+      this.enemies.length > 15
+    ) {
       this.enemies.push(
         new Enemy(
           this,
-          this.width + 25,
+          this.width - 25,
           Math.floor(Math.random() * game.height + 1),
-          2,
-          "green",
-          2
+          6,
+          1,
+          4,
+          30,
+          30
         )
       );
       this.enemyTimer4 = timestamp;
     }
 
-    if (this.enemyTimer5 < timestamp - 4000 &&
-      this.enemies.length - 1 < 500) {
+    /*  if (this.enemyTimer5 < timestamp - 4000 &&
+      this.enemies.length < 50 && this.enemies.length  > 30) {
+      this.enemies.push(
+        new Enemy(
+          this,
+          this.width + 25,
+          Math.floor(Math.random() * game.height + 1),
+          3,
+          2,
+          5,
+          30,
+          30
+        )
+      );
+      this.enemyTimer5 = timestamp;
+    }
+ */
+    if (
+      this.enemyTimer6 < timestamp - 30000 &&
+      this.enemies.length < 60 &&
+      this.enemies.length > 40
+    ) {
       this.enemies.push(
         new Enemy(
           this,
           this.width + 25,
           Math.floor(Math.random() * game.height + 1),
           2,
-          "brown",
-          3
-        )
-      );
-      this.enemyTimer5 = timestamp;
-    }
-
-    if (this.enemyTimer6 < timestamp - 5000 &&
-      this.enemies.length - 1 < 1000) {
-      this.enemies.push(
-        new Enemy(
-          this,
-          this.width + 25,
-          Math.floor(Math.random() * game.height + 1),
           1,
-          "red",
-          2
+          6,
+          30,
+          30
         )
       );
-      this.enemies.push(
+      /* this.enemies.push(
         new Enemy(
           this,
           Math.floor(Math.random() * game.width + 1),
           this.height+ 25,
-          3,
-          "blue",
-          2
+          2,
+          1,
+          6,
+          30,
+          30
         )
-      );
+      ); */
       this.enemies.push(
         new Enemy(
           this,
           -25,
           Math.floor(Math.random() * game.height + 1),
-          2,
-          "pink",
-          3
+          6,
+          1,
+          1,
+          30,
+          30
         )
       );
       this.enemyTimer6 = timestamp;
@@ -189,17 +227,13 @@ class Game {
             this.enemies[i].width,
             this.enemies[i].height,
             this.enemies[j].width,
-            this.enemies[j].height)
+            this.enemies[j].height
+          )
         ) {
-          this.enemies[i].move()
+          this.enemies[i].move();
 
-
-
-          this.enemies[j].move()
-
-
+          this.enemies[j].move();
         }
-
       }
 
       if (
@@ -214,15 +248,13 @@ class Game {
           this.enemies[i].height
         )
       ) {
-
         this.enemies[i].collided = true;
-        this.player.velocityX *= 0.8
-        this.player.velocityY *= 0.8
-
+        this.player.velocityX *= 0.8;
+        this.player.velocityY *= 0.8;
       } else {
         this.enemies[i].collided = false;
-        this.player.velocityX
-        this.player.velocityY
+        this.player.velocityX;
+        this.player.velocityY;
       }
       //console.log(this.enemies[i].collided)
       this.enemies[i].update();
@@ -241,7 +273,6 @@ class Game {
     }
 
     //console.log("mouse X: " + this.controls.x + "Y: " + this.controls.y)
-
 
     //console.log(this.bullets.length)
 
@@ -287,12 +318,11 @@ class Game {
           }
       }
     }
-    this.background.drawBorderTop()
-    this.player.draw();
+    this.background.drawBorderTop();
+    this.player.draw(timestamp);
     this.player.update();
-    this.background.drawBordersBLR()
+    this.background.drawBordersBLR();
   }
-
 
   clearCanvas() {
     this.context.clearRect(0, 0, this.width, this.height);
@@ -318,14 +348,18 @@ class Game {
 
   gameOverScreen() {
     this.running = false;
-    this.context.fillStyle = `black`;
+    this.context.fillStyle = `rgba(6, 46, 5, 0.71)`;
     this.context.fillRect(0, 0, this.width, this.height);
     this.context.font = "170px palatino";
     this.context.fillStyle = "darkred";
     this.context.fillText("YOU DIED", 95, 350);
     this.context.fillStyle = "darkgrey";
     this.context.font = "40px palatino";
-    this.context.fillText(`*     SCORE     *     ${this.player.score}     *`, 270, 450);
+    this.context.fillText(
+      `*     SCORE     *     ${this.player.score}     *`,
+      270,
+      450
+    );
     this.context.strokeStyle = "white";
     this.context.lineWidth = 3;
     this.context.beginPath();
@@ -335,7 +369,48 @@ class Game {
     this.context.closePath();
   }
 
-  reset() { }
+  reset() {
+    this.player = new Player(this);
+    this.player.health = 1000;
+    this.enemies = [];
+    this.bullets = [];
+    this.enemyTimer = 0;
+    this.enemyTimer2 = 0;
+    this.enemyTimer3 = 0;
+    this.enemyTimer4 = 0;
+    this.enemyTimer5 = 0;
+    this.enemyTimer6 = 0;
+    this.enemyTimer7 = 0;
+    this.timer = 0;
+    this.player.positionX = game.width / 2;
+    this.player.positionY = game.height - 200;
+    this.player.score = 0;
+  }
 
-  pause() { }
+  pause() {
+    if (!this.running) {
+      this.running = true;
+      this.animation();
+    } else {
+      this.context.strokeWidth = 2;
+      this.context.font = "170px palatino";
+      this.context.fillStyle = "black";
+      this.context.fillText("PAUSE", 240, 330);
+
+      game.running = false;
+      window.cancelAnimationFrame(this.stamp);
+    }
+  }
+
+  controlsScreen() {
+    if (!this.running) {
+      this.context.drawImage(this.controlsScreen, 300, 200, 200, 400);
+      
+    } else {
+      this.context.drawImage(this.controlsScreen, 300, 200, 200, 400);
+
+      game.running = false;
+      window.cancelAnimationFrame(this.stamp);
+    }
+  }
 }
