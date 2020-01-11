@@ -13,7 +13,7 @@ class Enemy {
     this.playerY = game.player.positionY;
     this.velocityX = 1;
     this.velocityY = 1;
-    this.speed = velocity * 0.4;
+    this.speed = velocity * 0.2;
     this.distance = 0;
     this.angle = 0;
     this.health = life;
@@ -24,7 +24,12 @@ class Enemy {
     this.count = 0;
     this.miniMushroom = new Image();
     this.miniMushroom.src = "./images/enemies/miniMushroom.png";
-    this.miniMushroomArray = [[0, 0], [50, 0], [0, 50], [50, 50]];
+    this.miniMushroomArray = [
+      [0, 0],
+      [50, 0],
+      [0, 50],
+      [50, 50]
+    ];
 
     this.enemy11 = new Image();
     this.enemy11.src = "./images/enemies/NormalMushroom_Walk_1.png";
@@ -103,12 +108,12 @@ class Enemy {
           if (this.count > 3) {
             this.count = 0;
             this.context.drawImage(
-                  this.enemy14,
-                  this.x,
-                  this.y,
-                  this.width,
-                  this.height
-                  );
+              this.enemy14,
+              this.x,
+              this.y,
+              this.width,
+              this.height
+            );
           } else if (this.count >= 0) {
             /* this.context.drawImage(
               this.miniMushroom,
@@ -128,8 +133,8 @@ class Enemy {
               this.y,
               this.width,
               this.height
-            );this.count++
-            
+            );
+            this.count++;
           } else if (this.count === 1) {
             this.context.drawImage(
               this.enemy12,
@@ -137,20 +142,20 @@ class Enemy {
               this.y,
               this.width,
               this.height
-            );this.count++
-            
-          } else if (this.count === 2){
+            );
+            this.count++;
+          } else if (this.count === 2) {
             this.context.drawImage(
               this.enemy13,
               this.x,
               this.y,
               this.width,
               this.height
-            );this.count++
-            
-            }
+            );
+            this.count++;
           }
-        
+        }
+
         break;
 
       /*  case 2:
